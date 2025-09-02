@@ -11,4 +11,44 @@ app.get("/", (c) => {
 	return c.text(welcomeStrings.join("\n\n"));
 });
 
+app.get('/redirector-a', (c) => {
+  const url = c.req.query('url')
+  if (url) {
+    return c.redirect(url)
+  }
+  return c.text('url query parameter is missing')
+})
+
+app.get('/redirector-b', (c) => {
+  const url = c.req.query('url')
+  if (url) {
+    return c.redirect(url)
+  }
+  return c.text('url query parameter is missing')
+})
+
+app.get('/redirector-c', (c) => {
+  const url = c.req.query('url')
+  if (url) {
+    return c.redirect(url)
+  }
+  return c.text('url query parameter is missing')
+})
+
+app.get('/redirector-d', (c) => {
+  const url = c.req.query('url')
+  if (url) {
+    return c.redirect(url)
+  }
+  return c.text('url query parameter is missing')
+})
+
+app.get('/redirector-e', (c) => {
+  const url = c.req.query('url')
+  if (url) {
+    return c.redirect(url)
+  }
+  return c.text('url query parameter is missing')
+})
+
 export default app;
