@@ -126,4 +126,15 @@ app.get('/benign-oembed.json', (c) => {
   return c.json(oembed);
 })
 
+app.get('/xss', (c) => {
+  const oembed = {
+    version: '1.0',
+    type: 'rich',
+    provider_name: 'XSS Test',
+    title: 'XSS Payload',
+    html: "<script>alert('XSS')</script>",
+  };
+  return c.json(oembed);
+});
+
 export default app;
