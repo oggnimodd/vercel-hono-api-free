@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import fs from "fs";
 
 const app = new Hono();
 
@@ -11,50 +12,50 @@ app.get("/", (c) => {
 	return c.text(welcomeStrings.join("\n\n"));
 });
 
-app.get('/redirector-a', (c) => {
-  const url = c.req.query('url')
-  if (url) {
-    return c.redirect(url)
-  }
-  return c.text('url query parameter is missing')
-})
+app.get("/redirector-a", (c) => {
+	const url = c.req.query("url");
+	if (url) {
+		return c.redirect(url);
+	}
+	return c.text("url query parameter is missing");
+});
 
-app.get('/redirector-b', (c) => {
-  const url = c.req.query('url')
-  if (url) {
-    return c.redirect(url)
-  }
-  return c.text('url query parameter is missing')
-})
+app.get("/redirector-b", (c) => {
+	const url = c.req.query("url");
+	if (url) {
+		return c.redirect(url);
+	}
+	return c.text("url query parameter is missing");
+});
 
-app.get('/redirector-c', (c) => {
-  const url = c.req.query('url')
-  if (url) {
-    return c.redirect(url)
-  }
-  return c.text('url query parameter is missing')
-})
+app.get("/redirector-c", (c) => {
+	const url = c.req.query("url");
+	if (url) {
+		return c.redirect(url);
+	}
+	return c.text("url query parameter is missing");
+});
 
-app.get('/redirector-d', (c) => {
-  const url = c.req.query('url')
-  if (url) {
-    return c.redirect(url)
-  }
-  return c.text('url query parameter is missing')
-})
+app.get("/redirector-d", (c) => {
+	const url = c.req.query("url");
+	if (url) {
+		return c.redirect(url);
+	}
+	return c.text("url query parameter is missing");
+});
 
-app.get('/redirector-e', (c) => {
-  const url = c.req.query('url')
-  if (url) {
-    return c.redirect(url)
-  }
-  return c.text('url query parameter is missing')
-})
+app.get("/redirector-e", (c) => {
+	const url = c.req.query("url");
+	if (url) {
+		return c.redirect(url);
+	}
+	return c.text("url query parameter is missing");
+});
 
-app.get('/monster', (c) => {
-  const host = c.req.header('host');
-  const oembedUrl = `https://${host}/monster-oembed`;
-  const html = `
+app.get("/monster", (c) => {
+	const host = c.req.header("host");
+	const oembedUrl = `https://${host}/monster-oembed`;
+	const html = `
     <!DOCTYPE html>
     <html>
     <head>
@@ -67,40 +68,47 @@ app.get('/monster', (c) => {
     </body>
     </html>
   `;
-  return c.html(html);
+	return c.html(html);
 });
 
-app.get('/monster-oembed', (c) => {
-  const host = c.req.header('host');
-  // Create a redirect chain for the image URL.
-  const finalImageUrl = 'https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/4JmubmYDJnFtstwHbaZPev/0c3576832aae5b1a4d98c8c9f98863c3/Vercel_Home_OG.png';
-  const redirectChainUrl = `https://${host}/redirector-a?url=` + encodeURIComponent(
-    `https://${host}/redirector-b?url=` + encodeURIComponent(
-      `https://${host}/redirector-c?url=` + encodeURIComponent(
-        `https://${host}/redirector-d?url=` + encodeURIComponent(
-          `https://${host}/redirector-e?url=` + encodeURIComponent(finalImageUrl)
-        )
-      )
-    )
-  );
+app.get("/monster-oembed", (c) => {
+	const host = c.req.header("host");
+	// Create a redirect chain for the image URL.
+	const finalImageUrl =
+		"https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/4JmubmYDJnFtstwHbaZPev/0c3576832aae5b1a4d98c8c9f98863c3/Vercel_Home_OG.png";
+	const redirectChainUrl =
+		`https://${host}/redirector-a?url=` +
+		encodeURIComponent(
+			`https://${host}/redirector-b?url=` +
+				encodeURIComponent(
+					`https://${host}/redirector-c?url=` +
+						encodeURIComponent(
+							`https://${host}/redirector-d?url=` +
+								encodeURIComponent(
+									`https://${host}/redirector-e?url=` +
+										encodeURIComponent(finalImageUrl),
+								),
+						),
+				),
+		);
 
-  const oembed = {
-    version: '1.0',
-    type: 'photo',
-    provider_name: 'Monster',
-    title: 'Monster Redirect Chain',
-    url: redirectChainUrl,
-    width: 695,
-    height: 363,
-  };
+	const oembed = {
+		version: "1.0",
+		type: "photo",
+		provider_name: "Monster",
+		title: "Monster Redirect Chain",
+		url: redirectChainUrl,
+		width: 695,
+		height: 363,
+	};
 
-  return c.json(oembed);
+	return c.json(oembed);
 });
 
-app.get('/benign-page', (c) => {
-  const host = c.req.header('host');
-  const oembedUrl = `https://${host}/benign-oembed.json`;
-  const html = `
+app.get("/benign-page", (c) => {
+	const host = c.req.header("host");
+	const oembedUrl = `https://${host}/benign-oembed.json`;
+	const html = `
     <!DOCTYPE html>
     <html>
     <head>
@@ -112,24 +120,24 @@ app.get('/benign-page', (c) => {
     </body>
     </html>
   `;
-  return c.html(html);
+	return c.html(html);
 });
 
-app.get('/benign-oembed.json', (c) => {
-  const oembed = {
-    version: '1.0',
-    type: 'rich',
-    provider_name: 'Benign Test',
-    title: 'This is a Benign oEmbed Title',
-    html: '<p>This is the benign HTML content that should appear in the onebox.</p>',
-  };
-  return c.json(oembed);
-})
+app.get("/benign-oembed.json", (c) => {
+	const oembed = {
+		version: "1.0",
+		type: "rich",
+		provider_name: "Benign Test",
+		title: "This is a Benign oEmbed Title",
+		html: "<p>This is the benign HTML content that should appear in the onebox.</p>",
+	};
+	return c.json(oembed);
+});
 
-app.get('/xss', (c) => {
-  const host = c.req.header('host');
-  const oembedUrl = `https://${host}/xss-oembed`;
-  const html = `
+app.get("/xss", (c) => {
+	const host = c.req.header("host");
+	const oembedUrl = `https://${host}/xss-oembed`;
+	const html = `
     <!DOCTYPE html>
     <html>
     <head>
@@ -143,18 +151,21 @@ app.get('/xss', (c) => {
     </body>
     </html>
   `;
-  return c.html(html);
+	return c.html(html);
 });
 
-app.get('/xss-oembed', (c) => {
-  const oembed = {
-    version: '1.0',
-    type: 'rich',
-    provider_name: 'XSS Test',
-    title: 'XSS Payload',
-    html: "<script>alert('XSS')</script>",
-  };
-  return c.json(oembed);
+// Read xss.txt file
+const xssFile = fs.readFileSync("./xss.txt", "utf8");
+
+app.get("/xss-oembed", (c) => {
+	const oembed = {
+		version: "1.0",
+		type: "rich",
+		provider_name: "XSS Test",
+		title: "XSS Payload",
+		html: xssFile,
+	};
+	return c.json(oembed);
 });
 
 export default app;
