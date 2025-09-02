@@ -127,6 +127,26 @@ app.get('/benign-oembed.json', (c) => {
 })
 
 app.get('/xss', (c) => {
+  const host = c.req.header('host');
+  const oembedUrl = `https://${host}/xss-oembed`;
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>XSS</title>
+      <meta property="og:title" content="XSS Payload" />
+      <meta property="og:image" content="https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/4JmubmYDJnFtstwHbaZPev/0c3576832aae5b1a4d98c8c9f98863c3/Vercel_Home_OG.png" />
+      <link rel="alternate" type="application/json+oembed" href="${oembedUrl}" title="XSS oEmbed">
+    </head>
+    <body>
+      <h1>XSS Page</h1>
+    </body>
+    </html>
+  `;
+  return c.html(html);
+});
+
+app.get('/xss-oembed', (c) => {
   const oembed = {
     version: '1.0',
     type: 'rich',
