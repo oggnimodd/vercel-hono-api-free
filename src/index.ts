@@ -51,4 +51,24 @@ app.get('/redirector-e', (c) => {
   return c.text('url query parameter is missing')
 })
 
+app.get('/monster', (c) => {
+  // Generate a large HTML response to test for DoS vulnerabilities in oEmbed parsers.
+  const sizeInMB = 10;
+  const char = 'a';
+  const monsterPayload = char.repeat(sizeInMB * 1024 * 1024);
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Monster</title>
+    </head>
+    <body>
+      <h1>Monster Page</h1>
+      <p>${monsterPayload}</p>
+    </body>
+    </html>
+  `;
+  return c.html(html);
+})
+
 export default app;
