@@ -158,6 +158,25 @@ app.get("/trickster", (c) => {
 	return c.html(html);
 });
 
+app.get("/no-trick", (c) => {
+	const html = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>A Perfectly Normal Page</title>
+        <meta property="og:title" content="A Perfectly Normal Page Title" />
+        <meta property="og:description" content="There is nothing suspicious here, just a normal page with a normal image." />
+        <meta property="og:image" content="https://images.unsplash.com/photo-1757034057097-7d0244a7b733?q=80&w=465&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </head>
+      <body>
+        <h1>This page uses OpenGraph tags to trick the Oneboxer.</h1>
+      </body>
+    </html>
+  `;
+	return c.html(html);
+});
+
 // Step 2: The malicious oEmbed response
 app.get("/trickster-oembed.json", (c) => {
 	const host = c.req.header("host");
