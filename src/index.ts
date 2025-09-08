@@ -126,4 +126,8 @@ app.get('/benign-oembed.json', (c) => {
   return c.json(oembed);
 })
 
+app.get('/image', (c) => {
+  return c.redirect('https://images.unsplash.com/photo-1563720241311-a5d7a994956f?q=80&w=435&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 302);
+});
+
 export default app;
