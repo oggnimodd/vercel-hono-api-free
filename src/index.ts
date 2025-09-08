@@ -136,17 +136,22 @@ app.get("/benign-oembed.json", (c) => {
 // Step 1: The page that gets Oneboxed
 app.get("/trickster", (c) => {
 	const host = c.req.header("host");
-	const oembedUrl = `https://${host}/trickster-oembed.json`;
+	// This is the URL that will perform the redirect to the final image.
+	// This will be placed in the og:image tag.
+	const imageUrl = `https://${host}/image`;
 
 	const html = `
     <!DOCTYPE html>
     <html>
       <head>
-        <title>Trickster Page</title>
-        <link rel="alternate" type="application/json+oembed" href="${oembedUrl}" title="Trickster oEmbed">
+        <title>A Perfectly Normal Page</title>
+        <meta property="og:title" content="A Perfectly Normal Page Title" />
+        <meta property="og:description" content="There is nothing suspicious here, just a normal page with a normal image." />
+        <meta property="og:image" content="${imageUrl}" />
+        <meta name="twitter:card" content="summary_large_image" />
       </head>
       <body>
-        <h1>This is a page designed to trick the Oneboxer.</h1>
+        <h1>This page uses OpenGraph tags to trick the Oneboxer.</h1>
       </body>
     </html>
   `;
